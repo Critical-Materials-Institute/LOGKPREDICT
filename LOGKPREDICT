@@ -1,0 +1,65 @@
+#!/usr/bin/env python
+
+from rdkit import Chem
+import sys, os
+
+import re
+
+try:
+   lp_dir=os.environ["LOGKPREDICT_DIR"]
+except:
+   print("Please, set up the environmental variable LOGPREDICT_DIR!")
+   exit()
+
+comm="chemprop_predict --test_path ML_inp_testONE.csv --features_path ML_feat_testONE.csv --checkpoint_path "+lp_dir+"/model.pt --preds_path ML_ONE_preds.csv"
+#comm="chemprop_predict --test_path ML_inp_testONE.csv --features_path ML_feat_testONE.csv --checkpoint_path model.pt --preds_path ML_ONE_preds.csv"
+
+#sys.path.append("/Users/federicozahariev1/Work/Programs/ML/PYTORCH/chemprop-master/")
+#sys.path.append("/Users/federicozahariev1/Work/Programs/ML/PYTORCH/chemprop-master/chemprop")
+
+def is_transition_metal(at):
+    n = at.GetAtomicNum()
+    return not (n==1 or (n>=5 and n<=9) or (n>=14 and n<=17) or n==35)
+
+def set_dative_bonds(mol, fromAtoms=(7,8)):
+    pt = Chem.GetPeriodicTable()
+    rwmol = Chem.RWMol(mol)
+    rwmol.UpdatePropertyCache(strict=False)
+    metals = [at for at in rwmol.GetAtoms() if is_transition_metal(at)]
+    for metal in metals:
+        for nbr in metal.GetNeighbors():
+            if nbr.GetAtomicNum() in fromAtoms:
+                rwmol.RemoveBond(nbr.GetIdx(),metal.GetIdx())
+                rwmol.AddBond(nbr.GetIdx(),metal.GetIdx(),Chem.BondType.DATIVE)
+    Chem.SanitizeMol(rwmol,Chem.SanitizeFlags.SANITIZE_FINDRADICALS|Chem.SanitizeFlags.SANITIZE_KEKULIZE|Chem.SanitizeFlags.SANITIZE_SETAROMATICITY|Chem.SanitizeFlags.SANITIZE_SETCONJUGATION|Chem.SanitizeFlags.SANITIZE_SETHYBRIDIZATION|Chem.SanitizeFlags.SANITIZE_SYMMRINGS,catchErrors=True)
+    return rwmol
+
+with open("ML_inp_testONE.csv",'w') as iw, open("ML_feat_testONE.csv",'w') as fw:
+    i_head="smiles"
+    print(i_head,file=iw)
+    f_head="I_in, Z_lig, Z_met, nrot, met_r, met_CN, E_strain, G_solv, rdhE, rdhC"
+    print(f_head,file=fw)
+    with open("logk_input",'r') as f:
+        dat_lines=f.readlines()
+        features0=dat_lines[1].split()
+        features=", ".join(features0[3:])
+        print(features,file=fw)
+        mod_dat_lines=""
+        for line in dat_lines[2:-1]:
+           mod_dat_lines+=line
+        #mol = Chem.MolFromMolBlock(mod_dat_lines,removeHs=False,sanitize=False)
+        mol = Chem.MolFromMolBlock(mod_dat_lines,sanitize=False)
+        mol2=set_dative_bonds(mol)
+        #print(Chem.MolToSmiles(mol2,allHsExplicit=True,allBondsExplicit=True),file=iw)
+        smiles=Chem.MolToSmiles(mol,allHsExplicit=False)
+        smiles2=re.sub(r'(->\[[A-Z][a-z]?)(H\d?)',r'\1',smiles)
+        smiles3=re.sub(r'(H\d?)(\+\d?\]<-)',r'\2',smiles2)
+        print(smiles3,file=iw)
+
+os.system(comm)
+
+with open("ML_ONE_preds.csv") as f1, open("logk_output",'w') as f2:
+    lines=f1.readlines()
+    logK=lines[1].split(',')[1][:-1]
+    print(logK,file=f2)
+
