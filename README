@@ -1,0 +1,36 @@
+
+LOGKPREDICT links HostDesigner (https://sourceforge.net/projects/hostdesigner/),
+with CHEMPROP (https://github.com/chemprop/chemprop). Please check the documentation
+of HostDesigner for how to use LOGPREDICT once it is installed.
+
+Installation of LOGKPREDICT together with the corresponding modified version 
+of CHEMPROP:
+
+0) Make sure that you have the Conda environment installed on your system (Linux, Mac OS, 
+or Windows). For this purpose, use either the full Conda environment (https://anaconda.org)
+or the minimal version of Conda, which is called Miniconda (https://conda.io/miniconda.html).
+
+1) Download chemprop-1.2.0 from https://github.com/chemprop/chemprop and replace 
+chemprop-1.2.0/chemprop/data/data.py with the modified data.py from this repository
+and replace chemprop-1.2.0/chemprop/feature/featurization.py withe the modifed feuturization.py
+from this repository.
+
+2) Go into the main chemprop-1.2.0 directory and issue the following command
+
+conda env create -f environment.yml
+
+3) conda activate chemprop
+
+4) pip install -e .
+
+5) Download LOGKPREDICT from this repository, put it into a directory from the PATH 
+on your system, and change the permissions of LOGPREDICT to make it executable, for
+example by "chmod 755 LOGKPREDICT".
+
+6) Download model.pt from this repository and set the environmental variable LOGKPREDICT 
+to point to the directory, where model.pt resides.
+
+7) You can test the installation by downloading logk_input and logk_output from this repository 
+(and renaming logk_output to a different name, for example logk_predict0) and issuing 
+the command "LOGKPREDICT" in the same direcoty where logk_input resides. The logk_output
+should coincide with logk_output0. 
