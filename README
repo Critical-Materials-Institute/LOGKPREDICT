@@ -34,5 +34,5 @@ to point to the directory, where model.pt resides.
 
 7) You can test the installation by downloading logk_input and logk_output from this repository 
 (and renaming logk_output to a different name, for example logk_predict0) and issuing 
-the command "LOGKPREDICT" in the same direcoty where logk_input resides. The logk_output
+the command "LOGKPREDICT" in the same directory where logk_input resides. The logk_output
 should coincide with logk_output0. 
