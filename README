@@ -12,7 +12,7 @@ or the minimal version of Conda, which is called Miniconda (https://conda.io/min
 
 1) Download chemprop-1.2.0 from https://github.com/chemprop/chemprop and replace 
 chemprop-1.2.0/chemprop/data/data.py with the modified data.py from this repository
-and replace chemprop-1.2.0/chemprop/feature/featurization.py withe the modifed feuturization.py
+and replace chemprop-1.2.0/chemprop/feature/featurization.py with the modifed feuturization.py
 from this repository.
 
 2) Go into the main chemprop-1.2.0 directory and issue the following command
