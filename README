@@ -29,7 +29,7 @@ example by issuing the command:
 
 chmod 755 LOGKPREDICT
 
-6) Download model.pt from this repository and set the environmental variable LOGKPREDICT 
+6) Download model.pt from this repository and set the environmental variable LOGKPREDICT_DIR 
 to point to the directory, where model.pt resides.
 
 7) You can test the installation by downloading logk_input and logk_output from this repository 
