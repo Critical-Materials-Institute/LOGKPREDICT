@@ -11,7 +11,12 @@ except:
    print("Please, set up the environmental variable LOGPREDICT_DIR!")
    exit()
 
-comm="chemprop_predict --num_workers 0 --test_path ML_inp_testONE.csv --features_path ML_feat_testONE.csv --checkpoint_path "+lp_dir+"/model.pt --preds_path ML_ONE_preds.csv"
+comm="chemprop_predict --num_workers 0 --test_path ML_inp_testONE.csv --features_path ML_feat_testONE.csv --checkpoint_path model.pt --preds_path ML_ONE_preds.csv"
+
+import numpy as np
+
+min_arr=[0., -4., 1., 0., 0.231, 4., 0., 59.8, -1.52, -0.36 ]
+max_arr=[1.1000e-01, 0.0000e+00, 4.0000e+00, 4.0000e+00, 1.9420e+00, 9.0000e+00, 1.2220e+01, 1.5679e+03, 8.9800e+00, 1.2600e+00]
 
 def is_transition_metal(at):
     n = at.GetAtomicNum()
@@ -37,8 +42,19 @@ with open("ML_inp_testONE.csv",'w') as iw, open("ML_feat_testONE.csv",'w') as fw
     print(f_head,file=fw)
     with open("logk_input",'r') as f:
         dat_lines=f.readlines()
-        features0=dat_lines[1].split()
-        features=", ".join(features0[3:])
+
+        #features0=dat_lines[1].split()
+        features0=dat_lines[1][:-1].split()
+        features1=list(map(float,features0[2:]))
+        for i in range(10):
+            features1[i]=features1[i]-min_arr[i]
+            denom=max_arr[i]-min_arr[i]
+            if not np.isclose(denom,0.0): features1[i]=features1[i]/denom
+            features1[i]=round(features1[i],4)
+        features2=list(map(str,features1))
+        features=", ".join(features2)
+        #features=", ".join(features0[2:])
+
         print(features,file=fw)
         mod_dat_lines=""
         for line in dat_lines[2:-1]:
