@@ -11,7 +11,7 @@ except:
    print("Please, set up the environmental variable LOGPREDICT_DIR!")
    exit()
 
-comm="chemprop_predict --num_workers 0 --test_path ML_inp_testONE.csv --features_path ML_feat_testONE.csv --checkpoint_path model.pt --preds_path ML_ONE_preds.csv"
+comm="chemprop_predict --num_workers 0 --test_path ML_inp_testONE.csv --features_path ML_feat_testONE.csv --checkpoint_path "+lp_dir+"/model.pt --preds_path ML_ONE_preds.csv"
 
 import numpy as np
 
