@@ -1,4 +1,6 @@
 
+# LOGKPREDICT
+
 LOGKPREDICT links HostDesigner (https://sourceforge.net/projects/hostdesigner/),
 with CHEMPROP (https://github.com/chemprop/chemprop). Please check the documentation
 of HostDesigner for how to use LOGPREDICT once it is installed.
