@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Zahariev"
+  given-names: "Federico"
+  orcid: "https://orcid.org/0000-0002-3223-3576"
+- family-names: "Perez Garcia"
+  given-names: "Marilu"
+  orcid: "https://orcid.org/0000-0001-9987-117X"
+title: "LOGKPREDICT"
+version: 1.0.0
+doi: 10.5281/zenodo.1234
+date-released: 2021-06
+url: "https://github.com/Critical-Materials-Institute/LOGKPREDICT"
