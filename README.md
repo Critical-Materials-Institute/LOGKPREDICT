@@ -15,7 +15,7 @@ or the minimal version of Conda, which is called Miniconda (https://conda.io/min
 
 1) Download chemprop-1.2.0 from https://github.com/chemprop/chemprop and replace 
 chemprop-1.2.0/chemprop/data/data.py with the modified data.py from this repository
-and replace chemprop-1.2.0/chemprop/feature/featurization.py with the modifed feuturization.py
+and replace chemprop-1.2.0/chemprop/feature/featurization.py with the modified feuturization.py
 from this repository.
 
 
@@ -46,5 +46,5 @@ If using bash shell, add the line to the .bashrc file (or file containing enviro
 
 5) You can test the installation by downloading logk_input and logk_output from this repository 
 (and renaming logk_output to a different name, for example logk_predict0) and issuing 
-the command "LOGKPREDICT" in the same direcoty where logk_input resides. The logk_output
+the command "LOGKPREDICT" in the same directory where logk_input resides. The logk_output
 should coincide with logk_output0. 
