@@ -1,10 +1,11 @@
 
 # LOGKPREDICT
 
-LOGKPREDICT is a code that links [HostDesigner](https://sourceforge.net/projects/hostdesigner/),
-with [CHEMPROP](https://github.com/chemprop/chemprop). LOGKPREDICT predicts stability constants, log K values, 
-using the [model](https://github.com/Critical-Materials-Institute/LOGKPREDICT/blob/main/model.pt) 
-trained using a modified chemprop. The primary purpose for this code is to provide an additional 
+LOGKPREDICT is a code that links [HostDesigner](https://sourceforge.net/projects/hostdesigner/)
+with [Chemprop](https://github.com/chemprop/chemprop). LOGKPREDICT predicts stability constants, log K values, 
+using [model](https://github.com/Critical-Materials-Institute/LOGKPREDICT/blob/main/model.pt) 
+trained with a modified chemprop and a stability constant database that is yet-to-be released. 
+The primary purpose for this code is to provide an additional 
 metric to rank molecules created using HostDesigner. 
 
 Please check the documentation
@@ -14,11 +15,11 @@ Installation of LOGKPREDICT together with the corresponding modified version
 of CHEMPROP:
 
 0) Make sure that you have the Conda environment installed on your system (Linux, Mac OS, 
-or Windows). For this purpose, use either the full Conda environment (https://anaconda.org)
-or the minimal version of Conda, which is called Miniconda (https://conda.io/miniconda.html).
+or Windows). For this purpose, use either the full [Conda](https://anaconda.org) environment
+or the minimal version of Conda, which is called [Miniconda](https://conda.io/miniconda.html).
 
 
-1) Download chemprop-1.2.0 from https://github.com/chemprop/chemprop and replace 
+1) Download chemprop-1.2.0 from [chemprop repository](https://github.com/chemprop/chemprop) and replace 
 chemprop-1.2.0/chemprop/data/data.py with the modified data.py from this repository
 and replace chemprop-1.2.0/chemprop/feature/featurization.py with the modified feuturization.py
 from this repository.
