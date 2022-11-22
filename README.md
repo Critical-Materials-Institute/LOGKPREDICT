@@ -1,8 +1,13 @@
 
 # LOGKPREDICT
 
-LOGKPREDICT links HostDesigner (https://sourceforge.net/projects/hostdesigner/),
-with CHEMPROP (https://github.com/chemprop/chemprop). Please check the documentation
+LOGKPREDICT is a code that links [HostDesigner](https://sourceforge.net/projects/hostdesigner/),
+with [CHEMPROP](https://github.com/chemprop/chemprop). LOGKPREDICT predicts stability constants, log K values, 
+using the [model](https://github.com/Critical-Materials-Institute/LOGKPREDICT/blob/main/model.pt) 
+trained using a modified chemprop. The primary purpose for this code is to provide an additional 
+metric to rank molecules created using HostDesigner. 
+
+Please check the documentation
 of HostDesigner for how to use LOGPREDICT once it is installed.
 
 Installation of LOGKPREDICT together with the corresponding modified version 
