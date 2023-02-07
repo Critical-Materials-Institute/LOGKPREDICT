@@ -61,9 +61,11 @@ with open("ML_inp_testONE.csv",'w') as iw, open("ML_feat_testONE.csv",'w') as fw
            mod_dat_lines+=line
         #mol = Chem.MolFromMolBlock(mod_dat_lines,removeHs=False,sanitize=False)
         mol = Chem.MolFromMolBlock(mod_dat_lines,sanitize=False)
+        
         mol2=set_dative_bonds(mol)
-        #print(Chem.MolToSmiles(mol2,allHsExplicit=True,allBondsExplicit=True),file=iw)
-        smiles=Chem.MolToSmiles(mol,allHsExplicit=False)
+        
+        # Add dative bonds to SMILES string
+        smiles=Chem.MolToSmiles(mol2,allHsExplicit=False)
         smiles2=re.sub(r'(->\[[A-Z][a-z]?)(H\d?)',r'\1',smiles)
         smiles3=re.sub(r'(H\d?)(\+\d?\]<-)',r'\2',smiles2)
         print(smiles3,file=iw)
