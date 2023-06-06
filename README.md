@@ -19,13 +19,10 @@ or Windows). For this purpose, use either the full [Conda](https://anaconda.org)
 or the minimal version of Conda, which is called [Miniconda](https://conda.io/miniconda.html).
 
 
-1) Download chemprop-1.2.0 from [chemprop repository](https://github.com/chemprop/chemprop) and replace 
-chemprop-1.2.0/chemprop/data/data.py with the modified data.py from this repository
-and replace chemprop-1.2.0/chemprop/feature/featurization.py with the modified feuturization.py
-from this repository.
+1) Download chemprop-1.5.2 from [chemprop repository](https://github.com/chemprop/chemprop).
 
 
-2) Go into the main chemprop-1.2.0 directory and issue the following commands:
+2) Go into the main chemprop-1.5.2 directory and issue the following commands:
 
 `conda env create -f environment.yml`
 
