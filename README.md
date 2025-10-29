@@ -1,53 +1,141 @@
 
 # LOGKPREDICT
 
-LOGKPREDICT is a code that links [HostDesigner](https://sourceforge.net/projects/hostdesigner/)
-with [Chemprop](https://github.com/chemprop/chemprop). LOGKPREDICT predicts stability constants, log K values, 
-using [model](https://github.com/Critical-Materials-Institute/LOGKPREDICT/blob/main/model.pt) 
-trained with a modified chemprop and a stability constant database that is yet-to-be released. 
-The primary purpose for this code is to provide an additional 
-metric to rank molecules created using HostDesigner. 
+LOGKPREDICT is a computational chemistry tool that predicts stability constants (log K values) for metal-ligand complexes. It integrates [HostDesigner](https://sourceforge.net/projects/hostdesigner/) with [Chemprop](https://github.com/chemprop/chemprop) machine learning models to provide stability predictions for ranking designed molecules.
 
-Please check the documentation
-of HostDesigner for how to use LOGPREDICT once it is installed.
+**Key Features:**
+- Predicts log K stability constants using neural networks trained on experimental data
+- Handles transition metal complexes with proper dative bond representation
+- Calculates molecular descriptors using RDKit
+- Clean, maintainable Python codebase following modern development practices
+- Full compatibility with HostDesigner workflow
 
-Installation of LOGKPREDICT together with the corresponding modified version 
-of CHEMPROP:
+## Quick Start
 
-0) Make sure that you have the Conda environment installed on your system (Linux, Mac OS, 
-or Windows). For this purpose, use either the full [Conda](https://anaconda.org) environment
-or the minimal version of Conda, which is called [Miniconda](https://conda.io/miniconda.html).
+The original interface remains unchanged for HostDesigner compatibility:
+```bash
+# Set environment variable
+export LOGKPREDICT_DIR='/path/to/LOGKPREDICT/'
+
+# Run prediction
+./LOGKPREDICT
+```
+
+## New Python API
+
+For advanced users and developers, a new Python API is available:
+```python
+from logk_lib import LogKPredictor
+
+# Initialize predictor
+predictor = LogKPredictor()
+
+# Predict from file
+result = predictor.predict_from_file('logk_input')
+print(f'Predicted log K: {result}')
+
+# Or predict directly from data
+features = [0.0, 2.0, 0.699, 6.0, 3.01, 473.2, 1.3, 0.264]
+mol_block = "..."
+result = predictor.predict(features, mol_block)
+```
+
+## Installation
+
+### Option 1: Modern Installation (Recommended)
+
+1) **Create conda environment:**
+```bash
+# Create environment with Python and core dependencies
+conda create -n logkpredict python=3.9 -y
+conda activate logkpredict
+conda install -c conda-forge rdkit numpy pandas -y
+
+# Install Chemprop and other dependencies
+pip install chemprop>=1.6.1 click typing-extensions
+
+# For development (optional)
+pip install pytest black isort flake8 mypy
+```
+
+2) **Install LOGKPREDICT:**
+```bash
+# Clone repository
+git clone https://github.com/Critical-Materials-Institute/LOGKPREDICT.git
+cd LOGKPREDICT
+
+# Install in development mode (optional)
+pip install -e .
+```
+
+### Option 2: Legacy Installation
+
+For compatibility with older workflows:
+
+1) Download chemprop-1.5.2+ from [chemprop repository](https://github.com/chemprop/chemprop)
+2) Install chemprop following their instructions
+3) Download LOGKPREDICT files
 
 
-1) Download chemprop-1.5.2 from [chemprop repository](https://github.com/chemprop/chemprop).
+## Configuration
 
+3) **Set up environment:**
+```bash
+# Make executable (if needed)
+chmod 755 LOGKPREDICT
 
-2) Go into the main chemprop-1.5.2 directory and issue the following commands:
+# Set environment variable
+export LOGKPREDICT_DIR='/path/to/LOGKPREDICT/directory/'
 
-`conda env create -f environment.yml`
+# For permanent setup, add to ~/.bashrc or ~/.zshrc:
+echo 'export LOGKPREDICT_DIR="/path/to/LOGKPREDICT/directory/"' >> ~/.bashrc
+```
 
-`conda activate chemprop`
+## Testing
 
-`pip install -e .`
+Test the installation using the provided example files:
+```bash
+# Activate environment
+conda activate logkpredict
+export LOGKPREDICT_DIR='/path/to/LOGKPREDICT/'
 
+# Test original interface
+./LOGKPREDICT
+# Should create logk_output with predicted value
 
-3) Download LOGKPREDICT from this repository, put it into a directory from the PATH 
-on your system, and change the permissions of LOGKPREDICT to make it executable, for
-example by issuing the command:
+# Test Python API
+python -c "
+from logk_lib import LogKPredictor
+predictor = LogKPredictor()
+result = predictor.predict_from_file('logk_input')
+print(f'Predicted log K: {result}')
+"
+```
 
-`chmod 755 LOGKPREDICT`
+## Code Architecture
 
+The codebase has been modernized while maintaining full backward compatibility:
 
-4) Download model.pt from this repository and set the environmental variable LOGKPREDICT_DIR
-to point to the directory where model.pt resides. 
+```
+LOGKPREDICT/
+├── LOGKPREDICT              # Original executable (HostDesigner compatible)
+├── model.pt                 # Pre-trained ML model
+├── logk_input              # Example input file
+├── logk_output             # Example output file
+├── logk_lib/               # New Python library
+│   ├── __init__.py        # Package interface
+│   ├── exceptions.py      # Custom exception hierarchy
+│   ├── molecular_processing.py  # RDKit molecular processing
+│   └── predictor.py       # Main prediction logic
+├── pyproject.toml         # Modern Python packaging
+└── data/                  # Training datasets
+```
 
-Example: 
-If using bash shell, add the line to the .bashrc file (or file containing environment variables):
+### Key Improvements
 
-`export LOGKPREDICT_DIR='/path/to/directory/'`
-
-
-5) You can test the installation by downloading logk_input and logk_output from this repository 
-(and renaming logk_output to a different name, for example logk_predict0) and issuing 
-the command "LOGKPREDICT" in the same directory where logk_input resides. The logk_output
-should coincide with logk_output0. 
+- **Clean Code Principles**: Modular design with single responsibility
+- **Type Safety**: Full type annotations and mypy compatibility
+- **Error Handling**: Comprehensive exception hierarchy
+- **Modern Python**: Uses pathlib, context managers, and latest practices
+- **Developer Tools**: Pre-configured formatting, linting, and testing
+- **Documentation**: Comprehensive docstrings and examples

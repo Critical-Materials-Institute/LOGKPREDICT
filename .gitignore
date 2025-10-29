@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# LOGKPREDICT temporary files
+ML_feat_testONE.csv
+ML_inp_testONE.csv
+ML_ONE_preds.csv
